@@ -1,0 +1,13 @@
+@import 'core';
+
+.student-list__actions {
+  width: 60px;
+}
+
+.student-list__checkbox {
+  width: 55px;
+}
+
+.student-list__name {
+  font-weight:  map-get($typo-weight, 'bold');
+}

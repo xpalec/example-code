@@ -1,0 +1,30 @@
+<e-header>
+  <e-header-content>
+    <e-header-item>
+      <e-back></e-back>
+      <e-title>
+        {{ 'student.titleEdit' | translate }}
+        {{ (this.student$ | async)?.profile.firstName }}
+        {{ (this.student$ | async)?.profile.lastName }}
+      </e-title>
+      <e-paginator-range *ngIf="this.spinnerActive$" [totalItems]="this.items$ | async"></e-paginator-range>
+    </e-header-item>
+  </e-header-content>
+  <e-navigation-tabs
+    *ngIf="routes"
+    [routes]="routes"
+    [id]="id"
+    [access]="canEdit"
+  ></e-navigation-tabs>
+</e-header>
+<div class="lesson-list__filters">
+  <e-search></e-search>
+  <e-filters>
+    <e-filter-date></e-filter-date>
+  </e-filters>
+</div>
+<e-student-lessonlist
+  [lessons]="this.lessons$ | async"
+  [pending]="this.spinnerActive$ | async"
+></e-student-lessonlist>
+<e-paginator [items]="this.items$ | async"></e-paginator>

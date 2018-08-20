@@ -1,0 +1,14 @@
+@import 'core';
+
+.student-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 960px;
+  margin: auto;
+}
+
+.student-form__column--details,
+.student-form__column--emergency {
+  flex: 1;
+}

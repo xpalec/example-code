@@ -1,0 +1,351 @@
+<div class="student-form">
+  <e-spinner [active]="this.pending && this.siblingsPending"></e-spinner>
+  <e-form
+    #formDir="ngForm"
+    [formGroup]="this.form"
+    (ngSubmit)="this.form.valid && this.submit$.next($event)"
+  >
+    <e-box-wrapper>
+      <e-box-column class="student-form__column--details">
+        <e-box-row>
+          <e-box-header>{{ 'form.student.studentDetails' | translate }}</e-box-header>
+          <e-box>
+            <e-form-wrapper>
+              <e-form-fields>
+                <e-form-row>
+                  <e-form-field>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        formControlName="email"
+                        [placeholder]="'form.student.email' | translate"
+                        [required]="true"
+                      >
+                    </mat-form-field>
+                    <e-form-validation
+                      [isSubmitted]="formDir.submitted"
+                      [formGroup]="this.form"
+                      field="email"
+                    ></e-form-validation>
+                  </e-form-field>
+                </e-form-row>
+                <ng-container formGroupName="profile">
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="firstName"
+                          [placeholder]="'form.student.firstName' | translate"
+                          [required]="true"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formProfile"
+                        field="firstName"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="lastName"
+                          [placeholder]="'form.student.lastName' | translate"
+                          [required]="true"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formProfile"
+                        field="lastName"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="localName"
+                          [placeholder]="'form.student.localName' | translate"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formProfile"
+                        field="localName"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          [placeholder]="'form.student.dateOfBirth' | translate"
+                          formControlName="dateOfBirth"
+                          [matDatepicker]="dateOfBirth"
+                          [min]="this.minDate"
+                          [max]="this.currentDate"
+                          (click)="dateOfBirth.open()"
+                        >
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="dateOfBirth"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #dateOfBirth></mat-datepicker>
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formProfile"
+                        field="dateOfBirth"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <mat-select
+                          [placeholder]="'form.student.gender' | translate"
+                          formControlName="gender"
+                          [required]="true"
+                        >
+                          <mat-option
+                            *ngFor="let option of this.genderList"
+                            [value]="option.id"
+                          >
+                            {{ option.name | translate }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formProfile"
+                        field="gender"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="contactNumber"
+                          [placeholder]="'form.student.contactNumber' | translate"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formProfile"
+                        field="contactNumber"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                </ng-container>
+                <e-form-row>
+                  <e-form-field>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        formControlName="schoolName"
+                        [placeholder]="'form.student.schoolName' | translate"
+                      >
+                    </mat-form-field>
+                    <e-form-validation
+                      [isSubmitted]="formDir.submitted"
+                      [formGroup]="this.form"
+                      field="schoolName"
+                    ></e-form-validation>
+                  </e-form-field>
+                </e-form-row>
+                <e-form-row>
+                  <e-form-field>
+                    <mat-form-field>
+                      <input
+                        matInput
+                        formControlName="schoolLevel"
+                        [placeholder]="'form.student.schoolLevel' | translate"
+                      >
+                    </mat-form-field>
+                    <e-form-validation
+                      [isSubmitted]="formDir.submitted"
+                      [formGroup]="this.form"
+                      field="schoolLevel"
+                    ></e-form-validation>
+                  </e-form-field>
+                </e-form-row>
+                <e-form-row>
+                  <e-form-field>
+                    <e-autocomplete-parent
+                      [formDir]="formDir"
+                      [form]="this.form"
+                      fieldName="parent"
+                      [required]="true"
+                    ></e-autocomplete-parent>
+                  </e-form-field>
+                </e-form-row>
+              </e-form-fields>
+            </e-form-wrapper>
+          </e-box>
+        </e-box-row>
+      </e-box-column>
+      <e-box-column class="student-form__column--emergency">
+        <e-box-row>
+          <e-box-header>{{ 'form.student.emergencyDetails' | translate }}</e-box-header>
+          <e-box>
+            <e-form-wrapper>
+              <e-form-fields>
+                <ng-container formGroupName="emergencyInfo">
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="firstName"
+                          [placeholder]="'form.student.emergencyInfo.firstName' | translate"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formEmergencyInfo"
+                        field="firstName"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="lastName"
+                          [placeholder]="'form.student.emergencyInfo.lastName' | translate"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formEmergencyInfo"
+                        field="lastName"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="localName"
+                          [placeholder]="'form.student.emergencyInfo.localName' | translate"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formEmergencyInfo"
+                        field="localName"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="contactNumber"
+                          [placeholder]="'form.student.emergencyInfo.contactNumber' | translate"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formEmergencyInfo"
+                        field="contactNumber"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                  <e-form-row>
+                    <e-form-field>
+                      <mat-form-field>
+                        <input
+                          matInput
+                          formControlName="email"
+                          [placeholder]="'form.student.emergencyInfo.email' | translate"
+                        >
+                      </mat-form-field>
+                      <e-form-validation
+                        [isSubmitted]="formDir.submitted"
+                        [formGroup]="this.formEmergencyInfo"
+                        field="email"
+                      ></e-form-validation>
+                    </e-form-field>
+                  </e-form-row>
+                </ng-container>
+              </e-form-fields>
+            </e-form-wrapper>
+          </e-box>
+        </e-box-row>
+        <e-box-row *ngIf="!!this.siblings.length">
+          <e-box-header>{{ 'form.student.siblings' | translate }}</e-box-header>
+          <e-table [pending]="pending">
+            <cdk-table #table [dataSource]="siblingsDataSource">
+              <ng-container cdkColumnDef="name">
+                <cdk-header-cell *cdkHeaderCellDef>
+                  {{ 'studentList.name' | translate }}
+                </cdk-header-cell>
+                <cdk-cell
+                  *cdkCellDef="let student"
+                  (click)="this.onEditStudent(student.id)"
+                  class="student-list__name"
+                >
+                  {{ student.profile.firstName }} {{ student.profile.lastName }}
+                </cdk-cell>
+              </ng-container>
+
+              <ng-container cdkColumnDef="email">
+                <cdk-header-cell *cdkHeaderCellDef>
+                  {{ 'studentList.email' | translate }}
+                </cdk-header-cell>
+                <cdk-cell
+                  *cdkCellDef="let student"
+                  (click)="this.onEditStudent(student.id)"
+                  class="student-list__email"
+                >
+                  {{ student.email }}
+                </cdk-cell>
+              </ng-container>
+
+              <ng-container cdkColumnDef="phone">
+                <cdk-header-cell *cdkHeaderCellDef>
+                  {{ 'studentList.phone' | translate }}
+                </cdk-header-cell>
+                <cdk-cell
+                  *cdkCellDef="let student"
+                  (click)="this.onEditStudent(student.id)"
+                  class="student-list__phone"
+                >
+                  {{ student.profile.contactNumber }}
+                </cdk-cell>
+              </ng-container>
+
+              <cdk-row *cdkRowDef="let row; columns: siblingsDisplayedColumns;"></cdk-row>
+            </cdk-table>
+          </e-table>
+        </e-box-row>
+      </e-box-column>
+    </e-box-wrapper>
+    <e-form-actions>
+      <e-button-container>
+        <e-button-item>
+          <e-button type="secondary" (click)="this.goBack()">
+            {{ 'button.cancel' | translate }}
+          </e-button>
+        </e-button-item>
+        <e-button-item *ngIf="this.canEdit">
+          <e-button action="submit">
+            {{ 'button.save' | translate }}
+          </e-button>
+        </e-button-item>
+      </e-button-container>
+    </e-form-actions>
+  </e-form>
+</div>

@@ -1,0 +1,38 @@
+<e-header>
+  <e-header-content>
+    <e-header-item>
+      <e-title>{{ 'student.title' | translate }}</e-title>
+      <e-paginator-range [totalItems]="this.items$ | async"></e-paginator-range>
+    </e-header-item>
+    <e-header-actions *ngIf="this.canAdd">
+      <e-migration-button>{{ 'import.uploadStudents' | translate }}</e-migration-button>
+    </e-header-actions>
+    <e-header-item *ngIf="this.canAdd">
+      <e-button
+        type="action"
+        icon="add"
+        (click)="this.onCreate()"
+      ></e-button>
+    </e-header-item>
+  </e-header-content>
+</e-header>
+<e-search class="students__panel"></e-search>
+<e-button
+  type="remove"
+  icon="delete_forever"
+  class="students__panel students__panel--remove"
+  (click)="toggleDialog()"
+  *ngIf="canDelete && selectedStudents && selectedStudents.length"
+></e-button>
+<e-student-list
+  [students]="this.students$ | async"
+  [pending]="this.spinnerActive$ | async"
+  [canDelete]="canDelete"
+  (selectedStudents)="onUpdateStudents($event)"
+>
+</e-student-list>
+<e-paginator [items]="this.items$ | async"></e-paginator>
+<e-dialog-remove
+  [(isActive)]="isActive"
+  (removeItems)="removeItems()"
+></e-dialog-remove>

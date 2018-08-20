@@ -1,0 +1,162 @@
+<div class="absence-list">
+  <e-spinner [active]="this.pending"></e-spinner>
+  <e-table [pending]="pending">
+    <e-table-empty *ngIf="!pending && isEmptyResult()"></e-table-empty>
+    <cdk-table #table [dataSource]="dataSource" *ngIf="!isEmptyResult()">
+
+      <ng-container cdkColumnDef="status">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'form.student.absence.status' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let absence"
+          class="absence-list__status"
+        >
+        <span matPrefix class="absence-list__select">
+          <ng-container [ngSwitch]="absence.absenceAction">
+            <span
+              *ngSwitchCase="this.absenceAction.Makeup"
+              class="absence-list__assigned"
+            >
+              {{ 'lessonList.absence.assigned' | translate }}
+            </span>
+            <span
+              *ngSwitchCase="this.absenceAction.None"
+              class="absence-list__unassigned"
+            >
+              {{ 'lessonList.absence.unassigned' | translate }}
+             </span>
+            <span
+              *ngSwitchDefault
+              class="absence-list__nomakeup"
+            >
+              {{ 'lessonList.absence.nomakeup' | translate }}
+            </span>
+          </ng-container>
+        </span>
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="category">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'form.student.absence.category' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let absence"
+          class="absence-list__categories"
+          (click)="this.onEditLesson(absence.lesson.id, absence.student.id)"
+        >
+          <span class="absence-list__category">
+            <e-bullet [color]="absence.lesson.colour"></e-bullet>
+            {{ absence.lesson.category?.name }}
+          </span>
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="lesson">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'form.student.absence.lesson' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let absence"
+          class="absence-list__title"
+          (click)="this.onEditLesson(absence.lesson.id, absence.student.id)"
+        >
+          {{ absence.lesson.title }}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="teacher">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'form.student.absence.teacher' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let absence"
+          class="absence-list__teacher"
+          (click)="this.onEditLesson(absence.lesson.id, absence.student.id)"
+        >
+          {{ absence.lesson.teacher?.profile.firstName }} {{ absence.lesson.teacher?.profile.lastName }}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="date">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'form.student.absence.startDate' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let absence"
+          class="absence-list__date"
+          (click)="this.onEditLesson(absence.lesson.id, absence.student.id)"
+        >
+          {{ this.getDate(absence.lesson.start) }}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="time">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'form.student.absence.startTime' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let absence"
+          class="absence-list__time"
+          (click)="this.onEditLesson(absence.lesson.id, absence.student.id)"
+        >
+          {{ this.getTime(absence.lesson.start) }}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="price">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'form.student.absence.price' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let absence"
+          class="absence-list__price"
+          (click)="this.onEditLesson(absence.lesson.id, absence.student.id)"
+        >
+          {{ getPrice(absence.lesson.price) }}
+          {{ 'currency.dollar' | translate}}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="actions">
+        <cdk-header-cell *cdkHeaderCellDef>
+        </cdk-header-cell>
+        <cdk-cell *cdkCellDef="let absence" class="absence-list__actions">
+          <e-table-actions *ngIf="showAbsenceActions(absence.absenceAction)">
+            <e-table-action
+              *ngIf="!isMakeupStatus(absence.absenceAction)"
+              (click)="nomakeup(absence)"
+              [matTooltip]="'form.student.absence.doesntNeedMakeup' | translate"
+            >
+              <mat-icon class="absence-list--action-icon">
+                cancel_presentation
+              </mat-icon>
+            </e-table-action>
+
+            <e-table-action
+              (click)="onAssignLesson(absence.id, absence.student.id)"
+              [matTooltip]="'form.student.absence.assign' | translate"
+            >
+              <mat-icon class="absence-list--action-icon">
+                insert_invitation
+              </mat-icon>
+            </e-table-action>
+
+            <e-table-action
+              (click)="onCreateLesson(absence.id, absence.student.id)"
+              [matTooltip]="'form.student.absence.createLesson' | translate"
+            >
+              <mat-icon class="absence-list--action-icon">
+                assignment_turned_in
+              </mat-icon>
+            </e-table-action>
+          </e-table-actions>
+        </cdk-cell>
+      </ng-container>
+
+      <cdk-header-row *cdkHeaderRowDef="displayedColumns"></cdk-header-row>
+      <cdk-row *cdkRowDef="let row; columns: displayedColumns;"></cdk-row>
+    </cdk-table>
+  </e-table>
+</div>

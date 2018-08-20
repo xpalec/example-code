@@ -1,0 +1,101 @@
+<div class="student-list">
+  <e-spinner [active]="this.pending"></e-spinner>
+  <e-table [pending]="pending">
+    <e-table-empty *ngIf="!pending && isEmptyResult()"></e-table-empty>
+
+    <cdk-table #table [dataSource]="dataSource" *ngIf="!isEmptyResult()">
+      <ng-container cdkColumnDef="checkbox">
+        <cdk-header-cell *cdkHeaderCellDef>
+          <mat-checkbox
+            (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected() && students.length"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            class="student-list--merged"
+          >
+          </mat-checkbox>
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let student"
+          class="student-list__checkbox student-list__cell"
+        >
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? toggleSelect(student) : null"
+            [checked]="selection.isSelected(student)"
+            class="student-list--merged"
+          >
+          </mat-checkbox>
+        </cdk-cell>
+      </ng-container>
+      <ng-container cdkColumnDef="name">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'studentList.name' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let student"
+          (click)="this.onEditStudent(student.id)"
+          class="student-list__name"
+        >
+          {{ student.profile.firstName }} {{ student.profile.lastName }}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="email">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'studentList.email' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let student"
+          (click)="this.onEditStudent(student.id)"
+          class="student-list__email"
+        >
+          {{ student.email }}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="phone">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'studentList.phone' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let student"
+          (click)="this.onEditStudent(student.id)"
+          class="student-list__phone"
+        >
+          {{ student.profile.contactNumber }}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="parent">
+        <cdk-header-cell *cdkHeaderCellDef>
+          {{ 'studentList.parent' | translate }}
+        </cdk-header-cell>
+        <cdk-cell
+          *cdkCellDef="let student"
+          (click)="this.onEditStudent(student.id)"
+          class="student-list__parent"
+        >
+          {{ student.parent.profile.firstName }} {{ student.parent.profile.lastName }}
+        </cdk-cell>
+      </ng-container>
+
+      <ng-container cdkColumnDef="actions">
+        <cdk-header-cell *cdkHeaderCellDef>
+        </cdk-header-cell>
+        <cdk-cell *cdkCellDef="let student" class="student-list__actions">
+          <e-table-actions>
+            <e-table-action
+              (click)="this.onEditStudent(student.id)"
+              [matTooltip]="'button.preview' | translate"
+            >
+              <e-icon icon="remove_red_eye"></e-icon>
+            </e-table-action>
+          </e-table-actions>
+        </cdk-cell>
+      </ng-container>
+
+      <cdk-header-row *cdkHeaderRowDef="displayedColumns"></cdk-header-row>
+      <cdk-row *cdkRowDef="let row; columns: displayedColumns;"></cdk-row>
+    </cdk-table>
+  </e-table>
+</div>

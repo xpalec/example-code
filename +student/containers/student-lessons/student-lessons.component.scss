@@ -1,0 +1,7 @@
+@import 'core';
+
+.lesson-list__filters {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}

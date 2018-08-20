@@ -1,0 +1,25 @@
+<e-header>
+  <e-header-content>
+    <e-header-item>
+      <e-back></e-back>
+      <e-title>
+        {{ 'student.titleEdit' | translate }}
+        {{ (this.student$ | async)?.profile.firstName }}
+        {{ (this.student$ | async)?.profile.lastName }}
+      </e-title>
+      <e-paginator-range *ngIf="(this.items$ | async) > 0" [totalItems]="this.items$ | async"></e-paginator-range>
+    </e-header-item>
+  </e-header-content>
+  <e-navigation-tabs *ngIf="routes" [routes]="routes" [id]="id" [access]="canEdit"></e-navigation-tabs>
+</e-header>
+<div class="student-absences__filters">
+  <e-search></e-search>
+  <e-filters>
+    <e-filter-absence-status></e-filter-absence-status>
+  </e-filters>
+</div>
+<e-student-absencelist
+  [absence]="this.absence | async"
+  [pending]="spinnerActive$ | async"
+></e-student-absencelist>
+<e-paginator [items]="this.items$ | async"></e-paginator>

@@ -1,0 +1,11 @@
+@import 'core';
+
+.student-absences__filters {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.active .navigation-link {
+    border-color: map-get($color-spaces, 'student');
+}

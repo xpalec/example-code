@@ -1,0 +1,19 @@
+@import 'core';
+
+.lesson-list__title {
+  font-weight: map-get($typo-weight, 'bold');
+}
+
+.lesson-list__category {
+  display: flex;
+  align-items: center;
+}
+
+.lesson-list__actions {
+  width: 60px;
+}
+
+.lesson-list__makeup-button {
+  color: $color-white;
+  background-color: map-get($color-brand, 'blue');
+}

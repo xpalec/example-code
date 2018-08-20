@@ -1,0 +1,54 @@
+@import 'core';
+
+.absence-list__status{
+  .mat-form-field-underline {
+    display: none;
+  }
+}
+
+.absence-list__status {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.absence-list__lesson {
+  font-weight: map-get($typo-weight, 'bold');
+}
+
+.absence-list__category {
+  display: flex;
+  align-items: center;
+}
+
+.absence-list__actions {
+  width: 60px;
+}
+
+.absence-list__nomakeup,
+.absence-list__unassigned,
+.absence-list__assigned {
+  text-transform: uppercase;
+  font-weight: map-get($typo-weight, 'bold');
+}
+
+.absence-list__unassigned {
+  color: map-get($color-brand, 'red');
+}
+
+.absence-list__assigned {
+  color: map-get($color-brand, 'green');
+}
+
+.absence-list__nomakeup {
+  color: map-get($color-base, 'default');
+}
+
+.absence-list__select {
+  color: map-get($color-base, 'default');
+}
+
+.absence-list__dosentNeed,
+.absence-list__createNew,
+.absence-list__assigneTo {
+  color: map-get($color-base, 'default');
+}

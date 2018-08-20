@@ -1,0 +1,41 @@
+<e-header>
+  <e-header-content>
+    <e-header-item>
+      <e-back></e-back>
+      <e-title>
+        <div *ngIf="isEditState;then editing else creating"></div>
+        <ng-template #editing>
+          {{ 'student.titleEdit' | translate }}
+          {{ (this.formData$ | async)?.profile.firstName }}
+          {{ (this.formData$ | async)?.profile.lastName }}
+        </ng-template>
+        <ng-template #creating>
+          {{ 'student.titleCreate' | translate }}
+        </ng-template>
+      </e-title>
+    </e-header-item>
+    <e-header-item *ngIf="this.isEditState && this.canDelete">
+      <e-button
+        type="remove"
+        icon="delete_forever"
+        (click)="toggleDialog()"
+      ></e-button>
+    </e-header-item>
+  </e-header-content>
+  <e-navigation-tabs
+    *ngIf="routes"
+    [routes]="routes"
+    [id]="(this.formData$ | async)?.id"
+    [access]="canEdit"
+  ></e-navigation-tabs>
+</e-header>
+<e-student-form
+  [submitAction]="this.submitAction"
+  [pending]="(this.isAbsencesPending$ | async) || (this.isStudentPending$ | async)"
+  [formData]="this.formData$ | async"
+  [space]="this.space"
+></e-student-form>
+<e-dialog-remove
+  [(isActive)]="isActive"
+  (removeItems)="removeItems()"
+></e-dialog-remove>
